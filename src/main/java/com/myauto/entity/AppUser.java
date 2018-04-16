@@ -1,15 +1,20 @@
 package com.myauto.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 import com.myauto.ids.AppUserId;
 
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "app_user")
-@NoArgsConstructor
+@Getter
+@Setter
 public class AppUser {
 
     @EmbeddedId
@@ -22,6 +27,9 @@ public class AppUser {
     @Column
     private String email;
     
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.ALL)
+    private Set<Car> cars = new HashSet<Car>(); 
+
     @Builder
     public AppUser(AppUserId id, String name, String email) {
         this.id = id;
