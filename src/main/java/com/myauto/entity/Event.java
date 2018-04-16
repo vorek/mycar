@@ -66,6 +66,9 @@ public class Event {
     @JoinColumn(name="car_id", insertable=false, updatable=false)
     private Car car;
 
+    public Event() {
+    }
+
     @Builder
     public Event(EventId id, LocalDate data, EventType type, Double price, String description, Long mileage, CarId carId) {
         this.id = id;

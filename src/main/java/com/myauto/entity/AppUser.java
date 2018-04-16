@@ -30,6 +30,9 @@ public class AppUser {
     @OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.ALL)
     private Set<Car> cars = new HashSet<Car>(); 
 
+    public AppUser() {
+    }
+
     @Builder
     public AppUser(AppUserId id, String name, String email) {
         this.id = id;

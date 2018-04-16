@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -74,8 +75,11 @@ public class Car {
     @JoinColumn(name="user_id", insertable=false, updatable=false)
     private AppUser user;
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="car")
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="car", cascade = CascadeType.ALL)
     private List<Event> events = new LinkedList<Event>();
+
+    public Car() {
+    }
 
     @Builder
     public Car(CarId id, String vendor, String model, Long year, Long mileage, FuelType fuelType, String vinCode, AppUserId userId) {
