@@ -14,4 +14,6 @@ public interface UserRepository {
     void add(AppUser user);
 
     AppUser get(AppUserId id);
+
+    AppUser findUserByEmail(String email);
 }

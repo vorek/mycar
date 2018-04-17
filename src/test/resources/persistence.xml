@@ -7,6 +7,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.myauto.entity.Event</class>
         <class>com.myauto.entity.Car</class>
+        <class>com.myauto.entity.Device</class>
         <class>com.myauto.entity.AppUser</class>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="create"/>

@@ -1,18 +1,29 @@
 package com;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
+import com.myauto.dto.AddUserRequest;
 import com.myauto.entity.AppUser;
 import com.myauto.entity.Car;
 import com.myauto.entity.Event;
@@ -35,6 +46,12 @@ public class DBTest extends TestCase {
     
     protected EntityManager entityManager;
     
+    /*
+    @Autowired
+    private WebApplicationContext wac;
+
+    protected MockMvc mockMvc;
+    */
     @PersistenceContext
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -48,9 +65,14 @@ public class DBTest extends TestCase {
     
     @Autowired
     EventRepository eventRepository;
+    /*
+    @PostConstruct
+    public void setup() throws IOException {
+        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }*/
     
     @Test
-    public void testAddingRecord() {
+    public void testAddingRecordInDataBase() {
         AppUser user = AppUser.builder()
                 .id(AppUserId.fromString("au-1"))
                 .name("TestName1")
@@ -93,4 +115,24 @@ public class DBTest extends TestCase {
         assertNotNull(event2);
         assertEquals(event2.getMileage().longValue(), 15000l);
     }
+/*
+    @Test
+    @Ignore
+    public void testAddingUserByRestfulApi() throws Exception {
+        AddUserRequest request = new AddUserRequest();
+        request.setDeviceImei("imei-1");
+        request.setDeviceName("iphone");
+        request.setEmail("myemail@email.email");
+        request.setName("Иван Васильевич");
+        request.setPassword("password");
+        
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/user")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("\"deviceImei\":\"imei-1\",\"deviceName\":\"iphone\",\"email\":\"myemail@email.email\",\"name\":\"Иван Васильевич\",\"password\":\"password\"")
+                )
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(MockMvcResultMatchers.status().isOk());
+    }*/
 }

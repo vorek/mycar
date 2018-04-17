@@ -92,4 +92,22 @@ public class Car {
         this.vinCode = vinCode;
         this.userId = userId;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Car that = (Car) o;
+
+        return vinCode != null ? vinCode.equals(that.vinCode) : that.vinCode == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (year != null ? year.intValue() : 0);
+        result = 31 * result + (mileage != null ? mileage.intValue() : 0);
+        result = 31 * result + (vinCode != null ? vinCode.hashCode() : 0);
+        return result;
+    }
 }

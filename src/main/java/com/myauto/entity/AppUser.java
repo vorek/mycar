@@ -1,6 +1,8 @@
 package com.myauto.entity;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -27,17 +29,24 @@ public class AppUser {
     @Column
     private String email;
     
+    @Column
+    private String password;
+    
     @OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.ALL)
-    private Set<Car> cars = new HashSet<Car>(); 
+    private Set<Car> cars = new HashSet<Car>();
+
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.ALL)
+    private Set<Device> devices = new HashSet<Device>();
 
     public AppUser() {
     }
 
     @Builder
-    public AppUser(AppUserId id, String name, String email) {
+    public AppUser(AppUserId id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.password = password;
     }
     
     public String getName() {

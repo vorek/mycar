@@ -1,5 +1,7 @@
 package com.myauto.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -29,5 +31,11 @@ public class JpaUserRepository implements UserRepository {
     public AppUser get(AppUserId id) {
         return entityManager.find(AppUser.class, id);
     }
-    
+
+    @Override
+    @Transactional
+    public AppUser findUserByEmail(String email) {
+        List<AppUser> users = entityManager.createQuery("select u from AppUser u where u.email=:email", AppUser.class).setParameter("email", email).getResultList();
+        return users.stream().findFirst().orElse(null);
+    }
 }
