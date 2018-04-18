@@ -72,7 +72,7 @@ public class DBTest extends TestCase {
     }*/
     
     @Test
-    public void testAddingRecordInDataBase() {
+    public void testAddingRecordInDataBase() throws Exception {
         AppUser user = AppUser.builder()
                 .id(AppUserId.fromString("au-1"))
                 .name("TestName1")

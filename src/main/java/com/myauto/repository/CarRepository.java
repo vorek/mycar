@@ -13,4 +13,6 @@ public interface CarRepository {
     void add(Car car);
     
     Car get(CarId carId);
+
+    Car findCarByVinCode(String vinCode);
 }

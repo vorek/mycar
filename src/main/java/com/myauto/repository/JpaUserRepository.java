@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.myauto.entity.AppUser;
+import com.myauto.exceptions.UserNotFoundException;
 import com.myauto.ids.AppUserId;
 
 @Repository
@@ -28,8 +29,12 @@ public class JpaUserRepository implements UserRepository {
 
     @Override
     @Transactional
-    public AppUser get(AppUserId id) {
-        return entityManager.find(AppUser.class, id);
+    public AppUser get(AppUserId id) throws UserNotFoundException {
+        AppUser user = entityManager.find(AppUser.class, id);
+        if (user == null) {
+            throw new UserNotFoundException(id.asString());
+        }
+        return user;
     }
 
     @Override
